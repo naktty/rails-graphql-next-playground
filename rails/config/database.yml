@@ -13,6 +13,6 @@ development:
 
 test:
   <<: *default
-  host: 127.0.0.1
+  host: <%= ENV['DB_HOST'] %>
   database: <%= ENV['DB_NAME_TEST'] %>
-  password:
+  password: <%= ENV['DB_PASSWORD'] %>
