@@ -1,7 +1,7 @@
 test:
   adapter: mysql2
   encoding: utf8
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  username: root
+  password:
   host: 127.0.0.1
-  database: <%= ENV['DB_NAME_TEST'] %>
+  database: myapp_test
