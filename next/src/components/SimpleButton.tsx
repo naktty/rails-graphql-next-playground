@@ -1,7 +1,11 @@
 import React from 'react'
 
 const SimpleButton: React.FC = () => {
-  return <button>Click Here</button>
+  const handleClick = () => {
+    console.log('Button clicked')
+  }
+
+  return <button onClick={handleClick}>Click me</button>
 }
 
 export default SimpleButton
