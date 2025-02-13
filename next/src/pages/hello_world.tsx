@@ -8,8 +8,8 @@ const HelloWorld: NextPage = () => {
 
   return (
     <>
-      <h1>Title</h1>
-      <p>content</p>
+      <h1 className="underline">Title</h1>
+      <p className="text-red-800">content</p>
       <SimpleButton text={'From HelloWorld'} onClick={handleOnClick} />
     </>
   )
