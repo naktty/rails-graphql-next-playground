@@ -12,8 +12,8 @@
 
 ActiveRecord::Schema[7.0].define(version: 2025_02_13_231552) do
   create_table "photos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
+    t.string "name", null: false
+    t.string "url", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
