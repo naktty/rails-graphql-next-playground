@@ -21,11 +21,16 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-                               description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    field :photo, Types::PhotoType, null: true do
+      argument :id, ID, required: true
+    end
+    def photo(id:)
+      Photo.find(id)
+    end
+
+    field :photos, [Types::PhotoType], null: true
+    def photos
+      Photo.all
     end
   end
 end
