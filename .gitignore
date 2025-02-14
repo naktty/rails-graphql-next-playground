@@ -30,3 +30,4 @@
 
 # Ignore environment variable files.
 /rails/.env
+.env

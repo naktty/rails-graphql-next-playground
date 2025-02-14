@@ -1,5 +1,5 @@
 FROM ruby:3.3.1
-RUN apt-get update -qq && apt-get install -y vim
+RUN apt-get update -qq && apt-get install -y vim default-mysql-client
 
 RUN mkdir /myapp
 WORKDIR /myapp

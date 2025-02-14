@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  host: <%= ENV['DB_HOST'] %>
+  host: <%= ENV['DB_HOST'] || '127.0.0.1' %>
   database: <%= ENV['DB_NAME_DEVELOPMENT'] %>
   password: <%= ENV['DB_PASSWORD'] %>
 
 test:
   <<: *default
-  host: <%= ENV['DB_HOST'] %>
+  host: <%= ENV['DB_HOST'] || '127.0.0.1' %>
   database: <%= ENV['DB_NAME_TEST'] %>
   password: <%= ENV['DB_PASSWORD'] %>
