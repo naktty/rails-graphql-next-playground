@@ -22,9 +22,6 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :photo, resolver: Resolvers::Photo
-    field :photos, [Types::PhotoType], null: true
-    def photos
-      Photo.all
-    end
+    field :photos, resolver: Resolvers::Photos
   end
 end
