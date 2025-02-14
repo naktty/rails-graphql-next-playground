@@ -21,13 +21,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :photo, Types::PhotoType, null: true do
-      argument :id, ID, required: true
-    end
-    def photo(id:)
-      Photo.find(id)
-    end
-
+    field :photo, resolver: Resolvers::Photo
     field :photos, [Types::PhotoType], null: true
     def photos
       Photo.all
