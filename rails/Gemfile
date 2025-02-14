@@ -24,6 +24,9 @@ gem "concurrent-ruby", "1.3.4"
 
 gem "graphql"
 
+gem 'mutex_m'
+gem 'bigdecimal'
+
 group :development do
   gem "graphiql-rails"
 end
