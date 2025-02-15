@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 module Types
-  class PhotoCategoryType < Types::BaseEnum
+  class PhotoCategory < Types::BaseEnum
     description "Category of the photo"
 
     value "SELFIE", "A photo taken of oneself", value: "selfie"
