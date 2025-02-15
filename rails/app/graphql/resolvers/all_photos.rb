@@ -1,13 +1,13 @@
 module Resolvers
   class AllPhotos < BaseResolver
-    description "Find all photos with pagination and sorting"
+    description "ページネーションとソート機能付きで全ての写真を取得"
     type [Types::PhotoType], null: false
 
-    argument :category, Types::PhotoCategory, required: false
-    argument :first, Integer, required: false
-    argument :start, Integer, required: false
-    argument :sort, Types::SortDirection, required: false
-    argument :sort_by, Types::SortablePhotoField, required: false
+    argument :category, Types::PhotoCategory, "フィルタリングするカテゴリー", required: false
+    argument :first, Integer, "取得する件数", required: false
+    argument :start, Integer, "取得開始位置", required: false
+    argument :sort, Types::SortDirection, "ソート方向", required: false
+    argument :sort_by, Types::SortablePhotoField, "ソートするフィールド", required: false
 
     def resolve(category: nil, first: 25, start: 0, sort: "DESCENDING", sort_by: "created_at")
       photos = ::Photo.all

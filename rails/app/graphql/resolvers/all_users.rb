@@ -1,6 +1,6 @@
 module Resolvers
   class AllUsers < BaseResolver
-    description "Find all users"
+    description "全てのユーザーを取得"
     type [Types::UserType], null: false
 
     def resolve

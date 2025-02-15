@@ -2,14 +2,14 @@
 
 module Types
   class PhotoType < Types::BaseObject
-    field :id, ID, null: false
-    field :name, String, "The name of the photo", null: false
-    field :category, Types::PhotoCategory, "The category of the photo"
-    field :url, String, "The URL of the photo", null: false
-    field :description, String
-    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :posted_by, Types::UserType, "The user who posted the photo", null: false
-    field :tagged_users, [Types::UserType], "The users tagged in the photo"
+    field :id, ID, null: false, description: "写真のID"
+    field :name, String, "写真の名前", null: false
+    field :category, Types::PhotoCategory, "写真のカテゴリー"
+    field :url, String, "写真のURL", null: false
+    field :description, String, "写真の説明"
+    field :created_at, GraphQL::Types::ISO8601DateTime, "作成日時", null: false
+    field :posted_by, Types::UserType, "投稿したユーザー", null: false
+    field :tagged_users, [Types::UserType], "タグ付けされたユーザー"
 
     def posted_by
       object.user

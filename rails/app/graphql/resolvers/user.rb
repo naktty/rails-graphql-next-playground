@@ -1,9 +1,9 @@
 module Resolvers
   class User < BaseResolver
-    description "Find a user by github login"
+    description "GitHubのログイン名でユーザーを検索"
     type Types::UserType, null: true
 
-    argument :github_login, String, required: true
+    argument :github_login, String, "GitHubのログイン名", required: true
 
     def resolve(github_login:)
       ::User.find_by(github_login:)
