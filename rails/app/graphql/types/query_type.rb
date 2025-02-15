@@ -23,5 +23,6 @@ module Types
 
     field :photo, resolver: Resolvers::Photo
     field :photos, resolver: Resolvers::Photos
+    field :user, resolver: Resolvers::User
   end
 end
