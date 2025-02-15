@@ -8,6 +8,6 @@ module Types
     field :url, String, "The URL of the photo", null: false
     field :description, String
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :posted_by, Types::UserType, "The user who posted the photo", null: false
   end
 end
