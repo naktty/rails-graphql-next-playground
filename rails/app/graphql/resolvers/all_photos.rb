@@ -14,21 +14,21 @@ module Resolvers
       photos = photos.where(category: category) if category.present?
 
       # ソート方向の決定
-      direction = sort == "ASCENDING" ? :asc : :desc
+      direction = (sort == "ASCENDING") ? :asc : :desc
 
       # ソートフィールドのマッピング
       sort_field = case sort_by
-        when "created_at"
-          :created_at
-        when "name"
-          :name
-        when "description"
-          :description
-        when "category"
-          :category
-        else
-          :created_at
-      end
+                   when "created_at"
+                     :created_at
+                   when "name"
+                     :name
+                   when "description"
+                     :description
+                   when "category"
+                     :category
+                   else
+                     :created_at
+                   end
 
       photos.order(sort_field => direction).offset(start).limit(first)
     end
