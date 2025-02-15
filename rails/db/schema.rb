@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_15_010501) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_15_053257) do
+  create_table "photo_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "photo_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["photo_id", "user_id"], name: "index_photo_tags_on_photo_id_and_user_id", unique: true
+    t.index ["photo_id"], name: "index_photo_tags_on_photo_id"
+    t.index ["user_id"], name: "index_photo_tags_on_user_id"
+  end
+
   create_table "photos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "url", null: false
@@ -31,5 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_15_010501) do
     t.index ["github_login"], name: "index_users_on_github_login", unique: true
   end
 
+  add_foreign_key "photo_tags", "photos"
+  add_foreign_key "photo_tags", "users"
   add_foreign_key "photos", "users"
 end

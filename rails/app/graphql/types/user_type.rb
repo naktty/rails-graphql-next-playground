@@ -7,9 +7,14 @@ module Types
     field :name, String
     field :avatar, String
     field :posted_photos, [Types::PhotoType]
+    field :tagged_photos, [Types::PhotoType]
 
     def posted_photos
-      object.photos.order(created_at: :desc)
+      object.photos
+    end
+
+    def tagged_photos
+      object.tagged_photos
     end
   end
 end
