@@ -23,7 +23,9 @@ module Types
 
     field :photo, resolver: Resolvers::Photo
     field :photos, resolver: Resolvers::Photos
+    field :total_photos, resolver: Resolvers::TotalPhotos
     field :user, resolver: Resolvers::User
     field :users, resolver: Resolvers::Users
+    field :total_users, resolver: Resolvers::TotalUsers
   end
 end
