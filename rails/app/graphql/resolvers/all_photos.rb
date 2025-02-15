@@ -3,7 +3,7 @@ module Resolvers
     description "Find all photos with pagination"
     type [Types::PhotoType], null: false
 
-    argument :category, Types::PhotoCategoryType, required: false
+    argument :category, Types::PhotoCategory, required: false
     argument :first, Integer, required: false
     argument :start, Integer, required: false
 
