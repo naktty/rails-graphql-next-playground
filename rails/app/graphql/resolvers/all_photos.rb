@@ -1,5 +1,5 @@
 module Resolvers
-  class Photos < BaseResolver
+  class AllPhotos < BaseResolver
     description "Find all photos"
     type [Types::PhotoType], null: true
 

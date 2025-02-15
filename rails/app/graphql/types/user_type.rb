@@ -7,14 +7,14 @@ module Types
     field :name, String
     field :avatar, String
     field :posted_photos, [Types::PhotoType]
-    field :tagged_photos, [Types::PhotoType]
+    field :in_photos, [Types::PhotoType]
 
     def posted_photos
       object.photos
     end
 
-    def tagged_photos
-      object.tagged_photos
+    def in_photos
+      object.in_photos
     end
   end
 end

@@ -1,5 +1,5 @@
 module Resolvers
-  class Users < BaseResolver
+  class AllUsers < BaseResolver
     description "Find all users"
     type [Types::UserType], null: false
 
