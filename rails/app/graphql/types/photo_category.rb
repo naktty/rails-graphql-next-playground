@@ -1,11 +1,11 @@
 module Types
   class PhotoCategory < Types::BaseEnum
-    description "Category of the photo"
+    description "写真のカテゴリー"
 
-    value "SELFIE", "A photo taken of oneself", value: "selfie"
-    value "PORTRAIT", "A portrait photo", value: "portrait"
-    value "ACTION", "An action photo", value: "action"
-    value "LANDSCAPE", "A landscape photo", value: "landscape"
-    value "GRAPHIC", "A graphic photo", value: "graphic"
+    value "SELFIE", "自分撮りの写真", value: "selfie"
+    value "PORTRAIT", "ポートレート写真", value: "portrait"
+    value "ACTION", "アクション写真", value: "action"
+    value "LANDSCAPE", "風景写真", value: "landscape"
+    value "GRAPHIC", "グラフィック写真", value: "graphic"
   end
 end

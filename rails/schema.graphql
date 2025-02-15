@@ -1,0 +1,222 @@
+"""
+An ISO 8601-encoded datetime
+"""
+scalar ISO8601DateTime @specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
+
+type Mutation {
+  """
+  An example field added by the generator
+  """
+  testField: String!
+}
+
+type Photo {
+  """
+  写真のカテゴリー
+  """
+  category: PhotoCategory
+
+  """
+  作成日時
+  """
+  createdAt: ISO8601DateTime!
+
+  """
+  写真の説明
+  """
+  description: String
+
+  """
+  写真のID
+  """
+  id: ID!
+
+  """
+  写真の名前
+  """
+  name: String!
+
+  """
+  投稿したユーザー
+  """
+  postedBy: User!
+
+  """
+  タグ付けされたユーザー
+  """
+  taggedUsers: [User!]
+
+  """
+  写真のURL
+  """
+  url: String!
+}
+
+"""
+写真のカテゴリー
+"""
+enum PhotoCategory {
+  """
+  アクション写真
+  """
+  ACTION
+
+  """
+  グラフィック写真
+  """
+  GRAPHIC
+
+  """
+  風景写真
+  """
+  LANDSCAPE
+
+  """
+  ポートレート写真
+  """
+  PORTRAIT
+
+  """
+  自分撮りの写真
+  """
+  SELFIE
+}
+
+type Query {
+  """
+  ページネーションとソート機能付きで全ての写真を取得
+  """
+  allPhotos(
+    """
+    フィルタリングするカテゴリー
+    """
+    category: PhotoCategory
+
+    """
+    取得する件数
+    """
+    first: Int
+
+    """
+    ソート方向
+    """
+    sort: SortDirection
+
+    """
+    ソートするフィールド
+    """
+    sortBy: SortablePhotoField
+
+    """
+    取得開始位置
+    """
+    start: Int
+  ): [Photo!]!
+
+  """
+  全てのユーザーを取得
+  """
+  allUsers: [User!]!
+
+  """
+  IDで写真を検索
+  """
+  photo(
+    """
+    写真のID
+    """
+    id: ID!
+  ): Photo
+
+  """
+  全ての写真の総数を取得
+  """
+  totalPhotos: Int!
+
+  """
+  全てのユーザーの総数を取得
+  """
+  totalUsers: Int!
+
+  """
+  GitHubのログイン名でユーザーを検索
+  """
+  user(
+    """
+    GitHubのログイン名
+    """
+    githubLogin: String!
+  ): User
+}
+
+"""
+ソート方向
+"""
+enum SortDirection {
+  """
+  昇順
+  """
+  ASCENDING
+
+  """
+  降順
+  """
+  DESCENDING
+}
+
+"""
+写真のソート可能なフィールド
+"""
+enum SortablePhotoField {
+  """
+  カテゴリー
+  """
+  category
+
+  """
+  作成日時
+  """
+  created_at
+
+  """
+  説明
+  """
+  description
+
+  """
+  名前
+  """
+  name
+}
+
+type User {
+  """
+  ユーザーのアバター
+  """
+  avatar: String
+
+  """
+  GitHubのログイン名
+  """
+  githubLogin: String!
+
+  """
+  ユーザーのID
+  """
+  id: ID!
+
+  """
+  タグ付けされた写真
+  """
+  inPhotos: [Photo!]
+
+  """
+  ユーザーの名前
+  """
+  name: String
+
+  """
+  投稿した写真
+  """
+  postedPhotos: [Photo!]
+}

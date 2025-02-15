@@ -1,8 +1,8 @@
 module Types
   class SortDirection < Types::BaseEnum
-    description "Sort direction"
+    description "ソート方向"
 
-    value "ASCENDING", "Ascending"
-    value "DESCENDING", "Descending"
+    value "ASCENDING", "昇順"
+    value "DESCENDING", "降順"
   end
 end
