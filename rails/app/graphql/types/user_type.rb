@@ -6,6 +6,6 @@ module Types
     field :github_login, String, null: false
     field :name, String
     field :avatar, String
-    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :posted_photos, [Types::PhotoType]
   end
 end
