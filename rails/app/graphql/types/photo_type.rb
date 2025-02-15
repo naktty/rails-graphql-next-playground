@@ -9,5 +9,9 @@ module Types
     field :description, String
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :posted_by, Types::UserType, "The user who posted the photo", null: false
+
+    def posted_by
+      object.user
+    end
   end
 end
