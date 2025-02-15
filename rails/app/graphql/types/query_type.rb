@@ -22,10 +22,10 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :photo, resolver: Resolvers::Photo
-    field :photos, resolver: Resolvers::Photos
+    field :all_photos, resolver: Resolvers::AllPhotos
     field :total_photos, resolver: Resolvers::TotalPhotos
     field :user, resolver: Resolvers::User
-    field :users, resolver: Resolvers::Users
+    field :all_users, resolver: Resolvers::AllUsers
     field :total_users, resolver: Resolvers::TotalUsers
   end
 end
