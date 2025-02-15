@@ -10,7 +10,7 @@ module Resolvers
     def resolve(category: nil, first: 25, start: 0)
       photos = ::Photo.all
       photos = photos.where(category: category) if category.present?
-      
+
       photos.offset(start).limit(first)
     end
   end
