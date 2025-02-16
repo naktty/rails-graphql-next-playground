@@ -30,6 +30,8 @@ gem "mutex_m"
 
 gem "sprockets-rails", "~> 3.5"
 
+gem "graphql-batch"
+
 group :development do
   gem "graphiql-rails"
 end
