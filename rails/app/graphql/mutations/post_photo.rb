@@ -13,7 +13,7 @@ module Mutations
       photo_url = "https://example.com/photos/#{photo_num}.jpg"
       photo = Photo.create!(**args.merge(user: User.first, url: photo_url))
       {
-        photo: photo
+        photo: photo,
       }
     end
   end
