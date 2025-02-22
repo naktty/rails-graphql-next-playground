@@ -10,7 +10,7 @@ module Types
     field :in_photos, [Types::PhotoType], description: "タグ付けされた写真"
 
     def posted_photos
-      object.photos
+      Loaders::AssociationLoader.for(User, :photos).load(object)
     end
 
     def in_photos
