@@ -7,10 +7,14 @@ module Mutations
     argument :category, Types::PhotoCategory, required: false, default_value: "portrait"
 
     def resolve(**args)
-      photo = Photo.create!(**args.merge(user: User.first, url: "pending"))
-      photo.update!(url: "https://example.com/photos/#{photo.id}.jpg")
+      user = context[:current_user]
+      raise GraphQL::ExecutionError, "Only an authorized user can post a photo" if user.nil?
+
+      photo = user.photos.create!(**args, url: "pending")
+      photo.update!(url: "/img/photos/#{photo.id}.jpg")
+
       {
-        photo: photo,
+        photo:,
       }
     end
   end
