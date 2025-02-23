@@ -1,5 +1,5 @@
 GraphiQL::Rails.config.headers = {
-  'Authorization' => -> (context) {
-    "Bearer #{ENV['TMP_TOKEN']}"
-  }
+  "Authorization" => ->(_context) {
+    "Bearer #{ENV["TMP_TOKEN"]}"
+  },
 }
