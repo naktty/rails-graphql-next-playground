@@ -180,6 +180,11 @@ type Query {
   allUsers: [User!]!
 
   """
+  ログイン中のユーザーを取得
+  """
+  me: User
+
+  """
   IDで写真を検索
   """
   photo(

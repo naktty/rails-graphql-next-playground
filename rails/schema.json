@@ -630,6 +630,18 @@
               "args": []
             },
             {
+              "name": "me",
+              "description": "ログイン中のユーザーを取得",
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null,
+              "args": []
+            },
+            {
               "name": "photo",
               "description": "IDで写真を検索",
               "type": {

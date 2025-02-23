@@ -11,8 +11,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user,
     }
     result = MyappSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -49,5 +48,12 @@ class GraphqlController < ApplicationController
       logger.error e.backtrace.join("\n")
 
       render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
+    end
+
+    def current_user
+      token = request.headers["Authorization"].split(" ")&.last
+      return nil unless token
+
+      User.find_by(github_token: token)
     end
 end
