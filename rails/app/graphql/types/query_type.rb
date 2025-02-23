@@ -27,5 +27,6 @@ module Types
     field :user, resolver: Resolvers::User
     field :all_users, resolver: Resolvers::AllUsers
     field :total_users, resolver: Resolvers::TotalUsers
+    field :me, resolver: Resolvers::Me
   end
 end
