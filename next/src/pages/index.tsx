@@ -1,11 +1,55 @@
+import { useQuery, gql } from '@apollo/client'
 import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
+import { getApolloClient } from '../../lib/apolloClient'
+// import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+const GET_USERS = gql`
+  query GetUsers {
+    allUsers {
+      id
+      name
+    }
+  }
+`
+export async function getServerSideProps() {
+  const client = getApolloClient()
+
+  try {
+    const { data } = await client.query({
+      query: GET_USERS,
+    })
+
+    return {
+      props: {
+        initialUsers: data.allUsers,
+      },
+    }
+  } catch (error) {
+    console.error('Error fetching users:', error)
+    return {
+      props: {
+        initialUsers: [],
+      },
+    }
+  }
+}
+
+type Props = {
+  initialUsers: Array<{ id: string; name: string }>
+}
+
+export default function Home({ initialUsers = [] }: Props) {
+  const { data, loading, error } = useQuery(GET_USERS)
+
+  const users = data?.allUsers || initialUsers
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error.message}</p>
+
   return (
     <>
       <Head>
@@ -107,6 +151,14 @@ export default function Home() {
               with&nbsp;Vercel.
             </p>
           </a>
+        </div>
+        <div>
+          <h1>Users</h1>
+          <ul>
+            {users.map((user: { id: string; name: string }) => (
+              <li key={user.id}>{user.name}</li>
+            ))}
+          </ul>
         </div>
       </main>
     </>
