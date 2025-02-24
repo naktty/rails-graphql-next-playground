@@ -32,6 +32,9 @@ gem "sprockets-rails", "~> 3.5"
 
 gem "graphql-batch"
 
+# CORS設定を管理する
+gem "rack-cors"
+
 group :development do
   gem "graphiql-rails"
 end
