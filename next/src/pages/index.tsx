@@ -1,6 +1,59 @@
+import { useQuery, gql } from '@apollo/client'
 import Head from 'next/head'
+import { getApolloClient } from '../../lib/apolloClient'
+import UserList from '@/components/UserList'
+// import styles from '@/styles/Home.module.css'
 
-export default function Home() {
+export const ROOT_QUERY = gql`
+  query allUsers {
+    totalUsers
+    allUsers {
+      githubLogin
+      name
+      avatar
+    }
+  }
+`
+export async function getServerSideProps() {
+  const client = getApolloClient()
+
+  try {
+    const { data } = await client.query({
+      query: ROOT_QUERY,
+    })
+
+    return {
+      props: {
+        initialUsers: data.allUsers,
+      },
+    }
+  } catch (error) {
+    console.error('Error fetching users:', error)
+    return {
+      props: {
+        initialUsers: [],
+      },
+    }
+  }
+}
+
+type Props = {
+  initialUsers: Array<{
+    githubLogin: string
+    name: string
+    avatar: string
+  }>
+}
+
+export default function Home({ initialUsers = [] }: Props) {
+  const { data, loading, error, refetch } = useQuery(ROOT_QUERY)
+
+  const users = data?.allUsers || initialUsers
+  const count = data?.totalUsers
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error.message}</p>
+
   return (
     <>
       <Head>
@@ -10,7 +63,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Hello World</h1>
+        <UserList count={count} users={users} refetchUsers={refetch} />
       </main>
     </>
   )

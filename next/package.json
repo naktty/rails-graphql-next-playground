@@ -10,6 +10,8 @@
     "format": "next lint --fix --dir src"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.1",
+    "graphql": "^16.10.0",
     "next": "^13.5.8",
     "react": "^18",
     "react-dom": "^18",
