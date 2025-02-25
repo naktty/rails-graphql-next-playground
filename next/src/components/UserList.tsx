@@ -1,5 +1,7 @@
+import { gql, useMutation } from '@apollo/client'
 import Image from 'next/image'
 import React from 'react'
+import { ROOT_QUERY } from '../pages'
 
 interface User {
   id: string
@@ -19,11 +21,34 @@ interface UserListItemProps {
   avatar: string
 }
 
+const ADD_FAKE_USERS_MUTATION = gql`
+  mutation addFakeUsers($input: AddFakeUsersInput!) {
+    addFakeUsers(input: $input) {
+      users {
+        githubLogin
+        name
+        avatar
+      }
+    }
+  }
+`
+
 const UserList: React.FC<UserListProps> = ({ count, users, refetchUsers }) => {
+  const [addFakeUsers] = useMutation(ADD_FAKE_USERS_MUTATION, {
+    refetchQueries: [{ query: ROOT_QUERY }],
+  })
+
+  const handleAddFakeUsers = () => {
+    addFakeUsers({ variables: { input: { count: 1 } } })
+    refetchUsers()
+  }
+
   return (
     <div>
       <p>{count} Users</p>
       <button onClick={() => refetchUsers()}>Refetch</button>
+      <br />
+      <button onClick={handleAddFakeUsers}>Add Fake Users</button>
       <ul>
         {users.map((user) => (
           <UserListItem
