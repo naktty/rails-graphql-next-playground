@@ -14,17 +14,24 @@ const GITHUB_AUTH_MUTATION = gql`
   }
 `
 
+interface GithubAuthData {
+  githubAuth: {
+    authPayload: {
+      token: string
+    }
+  }
+}
+
 const AuthorizedUser: NextPage = () => {
   const [signingIn, setSigningIn] = useState(false)
   const router = useRouter()
 
-  const authorizationComplete = () => {
-    router.replace('/')
-    setSigningIn(false)
-  }
-
   const [githubAuth] = useMutation(GITHUB_AUTH_MUTATION, {
-    update: authorizationComplete,
+    onCompleted: (data: GithubAuthData) => {
+      localStorage.setItem('token', data.githubAuth.authPayload.token)
+      router.replace('/')
+      setSigningIn(false)
+    },
     refetchQueries: [{ query: ROOT_QUERY }],
   })
 
