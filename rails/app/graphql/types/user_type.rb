@@ -4,6 +4,7 @@ module Types
   class UserType < Types::BaseObject
     field :id, ID, null: false, description: "ユーザーのID"
     field :github_login, String, null: false, description: "GitHubのログイン名"
+    field :github_id, String, null: false, description: "GitHubのtoken"
     field :name, String, description: "ユーザーの名前"
     field :avatar, String, description: "ユーザーのアバター"
     field :posted_photos, [Types::PhotoType], description: "投稿した写真"

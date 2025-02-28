@@ -1,19 +1,31 @@
 import { useQuery, gql } from '@apollo/client'
 import Head from 'next/head'
 import { getApolloClient } from '../../lib/apolloClient'
+import AuthorizedUser from '@/components/AuthorizedUser'
 import UserList from '@/components/UserList'
 // import styles from '@/styles/Home.module.css'
+
+const USER_INFO_FRAGMENT = gql`
+  fragment userInfo on User {
+    githubLogin
+    name
+    avatar
+  }
+`
 
 export const ROOT_QUERY = gql`
   query allUsers {
     totalUsers
     allUsers {
-      githubLogin
-      name
-      avatar
+      ...userInfo
+    }
+    me {
+      ...userInfo
     }
   }
+  ${USER_INFO_FRAGMENT}
 `
+
 export async function getServerSideProps() {
   const client = getApolloClient()
 
@@ -63,6 +75,7 @@ export default function Home({ initialUsers = [] }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <AuthorizedUser />
         <UserList count={count} users={users} refetchUsers={refetch} />
       </main>
     </>

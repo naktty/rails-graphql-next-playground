@@ -51,10 +51,10 @@ class GraphqlController < ApplicationController
     end
 
     def current_user
-      # token = request.headers["Authorization"].split(" ")&.last
-      # return nil unless token
+      token = request.headers["Authorization"].present? ? request.headers["Authorization"].split(" ")&.last : nil
+      return nil unless token
 
-      token = ENV["TMP_TOKEN"]
+      # token = ENV["TMP_TOKEN"]
       User.find_by(github_token: token)
     end
 end

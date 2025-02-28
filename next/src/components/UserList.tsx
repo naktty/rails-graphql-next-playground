@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import { ROOT_QUERY } from '../pages'
 
-interface User {
+export interface User {
   id: string
   name: string
   githubLogin: string
