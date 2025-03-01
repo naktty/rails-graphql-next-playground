@@ -312,11 +312,21 @@ enum SortablePhotoField {
   name
 }
 
+type Subscription {
+  newPhoto: Photo
+  newUser: User
+}
+
 type User {
   """
   ユーザーのアバター
   """
   avatar: String
+
+  """
+  GitHubのtoken
+  """
+  githubId: String!
 
   """
   GitHubのログイン名
