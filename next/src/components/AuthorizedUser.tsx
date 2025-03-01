@@ -96,8 +96,15 @@ const AuthorizedUser: NextPage = () => {
   const logout = () => {
     localStorage.removeItem('token')
     setSigningIn(false)
-    // ログアウト時にもキャッシュをリセット
-    client.resetStore()
+
+    // キャッシュ全体をリセットする代わりに、meフィールドのみnullに更新
+    client.writeQuery({
+      query: ROOT_QUERY,
+      data: {
+        me: null,
+      },
+    })
+
     router.replace('/')
   }
 

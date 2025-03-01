@@ -1,7 +1,7 @@
 import { gql, useMutation } from '@apollo/client'
 import Image from 'next/image'
 import React from 'react'
-import { ROOT_QUERY } from '../pages'
+import { ROOT_QUERY, RootQueryResult } from '../pages'
 
 export interface User {
   id: string
@@ -35,7 +35,18 @@ const ADD_FAKE_USERS_MUTATION = gql`
 
 const UserList: React.FC<UserListProps> = ({ count, users, refetchUsers }) => {
   const [addFakeUsers] = useMutation(ADD_FAKE_USERS_MUTATION, {
-    refetchQueries: [{ query: ROOT_QUERY }],
+    update(cache, { data }) {
+      const existingData = cache.readQuery<RootQueryResult>({
+        query: ROOT_QUERY,
+      })
+      cache.writeQuery({
+        query: ROOT_QUERY,
+        data: {
+          totalUsers: existingData.totalUsers + data.addFakeUsers.users.length,
+          allUsers: [...existingData.allUsers, ...data.addFakeUsers.users],
+        },
+      })
+    },
   })
 
   const handleAddFakeUsers = () => {
