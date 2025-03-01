@@ -13,8 +13,6 @@ module Mutations
       photo = user.photos.create!(**args, url: "pending")
       photo.update!(url: "/img/photos/#{photo.id}.jpg")
 
-      MySchema.subscriptions.trigger("new_photo", {}, photo, scope: user.id)
-
       {
         photo:,
       }
