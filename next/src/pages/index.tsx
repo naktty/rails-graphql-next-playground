@@ -26,6 +26,12 @@ export const ROOT_QUERY = gql`
   ${USER_INFO_FRAGMENT}
 `
 
+export type RootQueryResult = {
+  totalUsers: number
+  allUsers: User[]
+  me: User | null
+}
+
 export async function getServerSideProps() {
   const client = getApolloClient()
 
