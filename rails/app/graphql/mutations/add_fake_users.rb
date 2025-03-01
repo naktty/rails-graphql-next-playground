@@ -11,6 +11,7 @@ module Mutations
     def resolve(count:)
       results = fetch_random_users(count)
       users = create_users(results)
+      MyappSchema.subscriptions.trigger("new_user", {}, users.last)
       { users: users }
     rescue JSON::ParserError => e
       Rails.logger.error "JSON parse error: #{e.message}"
