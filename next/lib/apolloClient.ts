@@ -3,11 +3,17 @@ import {
   InMemoryCache,
   HttpLink,
   NormalizedCacheObject,
+  ApolloLink,
+  DocumentNode,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { createConsumer } from '@rails/actioncable'
 import { persistCache } from 'apollo3-cache-persist'
+import { DefinitionNode, OperationDefinitionNode } from 'graphql'
+import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
 const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql'
+const ACTIONCABLE_ENDPOINT = 'ws://localhost:3000/cable'
 
 const createApolloClient = () => {
   const httpLink = new HttpLink({
@@ -27,6 +33,32 @@ const createApolloClient = () => {
       },
     }
   })
+
+  // サブスクリプション操作を判別する関数
+  const hasSubscriptionOperation = ({ query }: { query: DocumentNode }) => {
+    return query.definitions.some(
+      (definition: DefinitionNode) =>
+        definition.kind === 'OperationDefinition' &&
+        (definition as OperationDefinitionNode).operation === 'subscription',
+    )
+  }
+
+  // ActionCableリンクの作成（クライアントサイドでのみ）
+  let actionCableLink
+  if (typeof window !== 'undefined') {
+    const cable = createConsumer(ACTIONCABLE_ENDPOINT)
+    actionCableLink = new ActionCableLink({ cable })
+  }
+
+  // リンクの分割（サブスクリプションとHTTPリクエスト）
+  const splitLink =
+    typeof window !== 'undefined'
+      ? ApolloLink.split(
+          hasSubscriptionOperation,
+          actionCableLink,
+          authLink.concat(httpLink),
+        )
+      : authLink.concat(httpLink)
 
   const cache = new InMemoryCache()
 
@@ -50,7 +82,7 @@ const createApolloClient = () => {
   }
 
   return new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: splitLink,
     cache,
   })
 }
