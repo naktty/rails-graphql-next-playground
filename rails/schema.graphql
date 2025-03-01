@@ -313,7 +313,6 @@ enum SortablePhotoField {
 }
 
 type Subscription {
-  newPhoto: Photo
   newUser: User
 }
 
