@@ -8,8 +8,8 @@ module ApplicationCable
 
     private
 
-    def find_verified_user
-      User.first
-    end
+      def find_verified_user
+        User.first
+      end
   end
 end

@@ -19,7 +19,7 @@ class GraphqlChannel < ApplicationCable::Channel
       query,
       context: context,
       variables: variables,
-      operation_name: operation_name
+      operation_name: operation_name,
     )
 
     payload = {
@@ -37,9 +37,9 @@ class GraphqlChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    @subscription_ids.each { |sid|
-      Mya ppSchema.subscriptions.delete_subscription(sid)
-    }
+    @subscription_ids.each do |sid|
+      MyappSchema.subscriptions.delete_subscription(sid)
+    end
   end
 
   private
