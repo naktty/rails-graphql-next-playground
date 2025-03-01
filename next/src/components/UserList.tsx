@@ -1,6 +1,11 @@
-import { gql, useMutation } from '@apollo/client'
+import {
+  gql,
+  useMutation,
+  useSubscription,
+  useApolloClient,
+} from '@apollo/client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ROOT_QUERY, RootQueryResult } from '../pages'
 
 export interface User {
@@ -33,7 +38,21 @@ const ADD_FAKE_USERS_MUTATION = gql`
   }
 `
 
+// 新しいユーザーを監視するサブスクリプション
+const NEW_USER_SUBSCRIPTION = gql`
+  subscription OnNewUser {
+    newUser {
+      id
+      name
+      githubLogin
+      avatar
+    }
+  }
+`
+
 const UserList: React.FC<UserListProps> = ({ count, users, refetchUsers }) => {
+  const client = useApolloClient()
+
   const [addFakeUsers] = useMutation(ADD_FAKE_USERS_MUTATION, {
     update(cache, { data }) {
       const existingData = cache.readQuery<RootQueryResult>({
@@ -48,6 +67,36 @@ const UserList: React.FC<UserListProps> = ({ count, users, refetchUsers }) => {
       })
     },
   })
+
+  // サブスクリプションを設定
+  const { data: subscriptionData } = useSubscription(NEW_USER_SUBSCRIPTION)
+
+  // サブスクリプションからデータが来たときにキャッシュを更新
+  useEffect(() => {
+    if (subscriptionData && subscriptionData.newUser) {
+      const cache = client.cache
+      const existingData = cache.readQuery<RootQueryResult>({
+        query: ROOT_QUERY,
+      })
+
+      // 新しいユーザーが既に存在しないことを確認
+      const userExists = existingData.allUsers.some(
+        (user: User) =>
+          user.githubLogin === subscriptionData.newUser.githubLogin,
+      )
+
+      if (!userExists) {
+        // キャッシュを更新
+        cache.writeQuery({
+          query: ROOT_QUERY,
+          data: {
+            totalUsers: existingData.totalUsers + 1,
+            allUsers: [...existingData.allUsers, subscriptionData.newUser],
+          },
+        })
+      }
+    }
+  }, [subscriptionData, client])
 
   const handleAddFakeUsers = () => {
     addFakeUsers({ variables: { input: { count: 1 } } })

@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.1",
+    "@rails/actioncable": "^8.0.100",
     "apollo3-cache-persist": "^0.15.0",
     "graphql": "^16.10.0",
+    "graphql-ruby-client": "^1.14.5",
     "next": "^13.5.8",
     "react": "^18",
     "react-dom": "^18",
